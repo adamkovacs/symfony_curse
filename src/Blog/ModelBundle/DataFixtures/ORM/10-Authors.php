@@ -39,6 +39,5 @@ class Authors extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($a3);
 
         $manager->flush();
-
     }
 }

@@ -4,6 +4,7 @@ namespace Blog\ModelBundle\DataFixtures\ORM;
 
 use Blog\ModelBundle\Entity\Author;
 use Blog\ModelBundle\Entity\Post;
+use Blog\ModelBundle\Entity\Tag;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -39,6 +40,9 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
                Sed mattis neque hendrerit, consectetur eros non, placerat lorem.
                Praesent vel volutpat augue, a aliquet erat. Proin varius eu tellus at rutrum.');
         $p1->setAuthor($this->getAuthor($manager, 'David'));
+        $p1->addTag($this->getTag($manager, 'Tag1'));
+        $p1->addTag($this->getTag($manager, 'Tag2'));
+        $p1->addTag($this->getTag($manager, 'Tag3'));
 
         $p2 = new Post();
         $p2->setTitle('Nulla quis ultricies risus');
@@ -52,6 +56,7 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
             ut ullamcorper libero. Maecenas dignissim lobortis ipsum, sed mollis libero vulputate vitae.
             Vivamus nec posuere leo. Interdum et malesuada fames ac ante ipsum primis in faucibus.');
         $p2->setAuthor($this->getAuthor($manager, 'Eddie'));
+        $p2->addTag($this->getTag($manager, 'Tag1'));
 
         $p3 = new Post();
         $p3->setTitle('Ut porta at nibh a fermentum');
@@ -62,6 +67,7 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
             nulla, fermentum aliquet leo. Vivamus placerat laoreet tristique. Integer eleifend nisi in ex
              convallis, in tristique tellus ullamcorper.');
         $p3->setAuthor($this->getAuthor($manager, 'Eddie'));
+        $p3->addTag($this->getTag($manager, 'Tag1'));
 
         $manager->persist($p1);
         $manager->persist($p2);
@@ -84,6 +90,23 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
           array(
               'name' => $name
           )
+        );
+    }
+
+    /**
+     * Get a Tag
+     *
+     * @param ObjectManager $manager
+     * @param string $tagName
+     *
+     * @return Tag
+     */
+    private function getTag(ObjectManager $manager, $tagName)
+    {
+        return $manager->getRepository('ModelBundle:Tag')->findOneBy(
+            array(
+                'name' => $tagName
+            )
         );
     }
 }
