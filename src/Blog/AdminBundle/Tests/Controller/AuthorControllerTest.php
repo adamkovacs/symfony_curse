@@ -23,7 +23,7 @@ class AuthorControllerTest extends WebTestCase
         // Create a new entry in the database
         $crawler = $client->request('GET', '/admin/author/');
         $this->assertTrue($client->getResponse()->isSuccessful(), "The response was not successful.");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
+        $crawler = $client->click($crawler->selectLink('Create a new author')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(
@@ -45,7 +45,7 @@ class AuthorControllerTest extends WebTestCase
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
-        $form = $crawler->selectButton('Update')->form(
+        $form = $crawler->selectButton('Edit')->form(
             array(
             'blog_modelbundle_author[name]'  => 'Another one'
             )
