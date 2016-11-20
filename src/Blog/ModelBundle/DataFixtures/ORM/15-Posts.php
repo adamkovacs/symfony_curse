@@ -41,7 +41,6 @@ class Posts extends AbstractFixture implements OrderedFixtureInterface
                Praesent vel volutpat augue, a aliquet erat. Proin varius eu tellus at rutrum.');
         $p1->setAuthor($this->getAuthor($manager, 'David'));
         $p1->addTag($this->getTag($manager, 'Tag1'));
-        $p1->addTag($this->getTag($manager, 'Tag2'));
         $p1->addTag($this->getTag($manager, 'Tag3'));
 
         $p2 = new Post();

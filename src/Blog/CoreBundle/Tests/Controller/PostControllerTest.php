@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class PostControllerTest extends WebTestCase
 {
     /**
-     *
+     * Test index
      */
     public function testIndex()
     {

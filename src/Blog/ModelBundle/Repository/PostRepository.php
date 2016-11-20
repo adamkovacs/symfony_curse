@@ -2,6 +2,7 @@
 
 namespace Blog\ModelBundle\Repository;
 use Blog\ModelBundle\Entity\Post;
+use Blog\ModelBundle\Entity\Tag;
 
 /**
  * PostRepository
@@ -40,6 +41,22 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getSingleResult();
     }
+
+    /**
+     * Find posts by tag
+     *
+     * @param $tag Tag
+     *
+     * @return Post
+     */
+    public function findPostsByTag($tag)
+    {
+        $qb = $this->getQueryBuilder();
+        $qb->join('p.tags', 't', 'WITH', $qb->expr()->in('t.id', $tag->getId()));
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     private function getQueryBuilder()
     {

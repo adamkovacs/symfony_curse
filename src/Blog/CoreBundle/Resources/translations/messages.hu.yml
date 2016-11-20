@@ -5,6 +5,7 @@ by: Szerző
 read.more: Tovább
 name: Név
 send: Küldés
+tags: Cimkék
 
 post:
   plural: Postok
@@ -12,6 +13,7 @@ post:
   on: Postolva
   by: Postolta
   by.author: Postolta %name%
+  by.tag: %name%
   comments: '{0} Nincs komment|{1} %count% komment|]1,Inf] %count% komment'
 
 comment:
@@ -23,3 +25,7 @@ comment:
 author:
   title: Szerző
   empty.posts: Ez a szerző még nem postolt.
+
+tag:
+  title: Cimke
+  empty.posts: Ehhez a cimkéhez nincs post.

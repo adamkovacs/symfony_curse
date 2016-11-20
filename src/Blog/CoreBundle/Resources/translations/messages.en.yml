@@ -5,6 +5,7 @@ by: by
 read.more: Read more
 name: Name
 send: Send
+tags: Tags
 
 post:
   plural: Posts
@@ -12,6 +13,7 @@ post:
   on: Posted on
   by: Posts by
   by.author: Posts by %name%
+  by.tag: %name%
   comments: '{0} No comments|{1} %count% comment|]1,Inf] %count% comments'
 
 comment:
@@ -22,3 +24,7 @@ comment:
 author:
   title: Author
   empty.posts: This author did not write any post yet.
+
+tag:
+  title: Tag
+  empty.posts: This tag has not post.
