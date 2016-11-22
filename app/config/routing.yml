@@ -8,3 +8,6 @@ core:
     type:     annotation
     prefix:   /
 
+access_denied:
+    path: /admin
+

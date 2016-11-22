@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Blog\ModelBundle\Entity\Post;
 /**
  * Post controller.
@@ -49,7 +50,14 @@ class PostController extends Controller
         $form = $this->createForm('Blog\ModelBundle\Form\PostType', $post);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $postArray = $request->get('blog_modelbundle_post');
             $em = $this->getDoctrine()->getManager();
+            if (isset($postArray['tags'])) {
+                foreach ($postArray['tags'] as $tagId) {
+                    $tag = $em->getRepository('ModelBundle:Tag')->find($tagId);
+                    $post->addTag($tag);
+                }
+            }
             $em->persist($post);
             $em->flush();
             return $this->redirectToRoute('blog_admin_post_show', array('id' => $post->getId()));
@@ -86,6 +94,7 @@ class PostController extends Controller
      *
      * @return array
      *
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/{id}/edit")
      * @Method({"GET", "POST"})
      * @Template()
@@ -115,6 +124,7 @@ class PostController extends Controller
      *
      * @return RedirectResponse
      *
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      * @Route("/{id}")
      * @Method("DELETE")
      */

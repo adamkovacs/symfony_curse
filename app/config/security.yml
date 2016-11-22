@@ -13,7 +13,10 @@ security:
         in_memory:
             memory:
               users:
-                admin: { password: admin, roles: [ 'ROLE_ADMIN' ]}
+                admin: { password: admin, roles: [ 'ROLE_SUPER_ADMIN' ] }
+                David: { password: admin, roles: [ 'ROLE_ADMIN' ] }
+                Eddie: { password: admin, roles: [ 'ROLE_ADMIN' ] }
+                Elasa: { password: admin, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
 
@@ -31,6 +34,7 @@ security:
           logout:
             path: blog_admin_security_logout
             target: /admin/post
+          access_denied_url: access_denied
 
         main:
           anonymous: ~

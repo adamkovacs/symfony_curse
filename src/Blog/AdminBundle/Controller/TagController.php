@@ -6,17 +6,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Blog\ModelBundle\Entity\Author;
+use Blog\ModelBundle\Entity\Tag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
- * Author controller.
+ * Tag controller.
  *
- * @Route("/author")
+ * @Route("/tag")
  */
-class AuthorController extends Controller
+class TagController extends Controller
 {
     /**
-     * Lists all Author entities.
+     * Lists all Tag entities.
      *
      * @return array
      *
@@ -27,13 +27,13 @@ class AuthorController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $authors = $em->getRepository('ModelBundle:Author')->findAll();
+        $tags = $em->getRepository('ModelBundle:Tag')->findAll();
         return array(
-            'authors' => $authors,
+            'tags' => $tags,
         );
     }
     /**
-     * Creates a new Author entity.
+     * Creates a new Tag entity.
      *
      * @param Request $request
      *
@@ -46,45 +46,26 @@ class AuthorController extends Controller
      */
     public function newAction(Request $request)
     {
-        $author = new Author();
-        $form = $this->createForm('Blog\ModelBundle\Form\AuthorType', $author);
+        $tag = new Tag();
+        $form = $this->createForm('Blog\ModelBundle\Form\TagType', $tag);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($author);
+            $em->persist($tag);
             $em->flush();
-            return $this->redirectToRoute('blog_admin_author_show', array('id' => $author->getId()));
+            return $this->redirectToRoute('blog_admin_tag_index');
         }
         return array(
-            'author' => $author,
+            'tag' => $tag,
             'form' => $form->createView(),
         );
     }
+
     /**
-     * Finds and displays a Author entity.
-     *
-     * @param Author $author
-     *
-     * @throws NotFoundHttpException
-     * @return array
-     *
-     * @Route("/{id}")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction(Author $author)
-    {
-        $deleteForm = $this->createDeleteForm($author);
-        return array(
-            'author' => $author,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-    /**
-     * Displays a form to edit an existing Author entity.
+     * Displays a form to edit an existing Tag entity.
      *
      * @param Request $request
-     * @param Author  $author
+     * @param Tag  $tag
      *
      * @throws NotFoundHttpException
      * @return array
@@ -94,28 +75,28 @@ class AuthorController extends Controller
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction(Request $request, Author $author)
+    public function editAction(Request $request, Tag $tag)
     {
-        $deleteForm = $this->createDeleteForm($author);
-        $editForm = $this->createForm('Blog\ModelBundle\Form\AuthorType', $author);
+        $deleteForm = $this->createDeleteForm($tag);
+        $editForm = $this->createForm('Blog\ModelBundle\Form\TagType', $tag);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($author);
+            $em->persist($tag);
             $em->flush();
-            return $this->redirectToRoute('blog_admin_author_edit', array('id' => $author->getId()));
+            return $this->redirectToRoute('blog_admin_tag_index');
         }
         return array(
-            'author' => $author,
+            'tag' => $tag,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
     /**
-     * Deletes a Author entity.
+     * Deletes a Tag entity.
      *
      * @param Request $request
-     * @param Author  $author
+     * @param Tag  $tag
      *
      * @throws NotFoundHttpException
      * @return array
@@ -124,28 +105,28 @@ class AuthorController extends Controller
      * @Route("/{id}")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Author $author)
+    public function deleteAction(Request $request, Tag $tag)
     {
-        $form = $this->createDeleteForm($author);
+        $form = $this->createDeleteForm($tag);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($author);
+            $em->remove($tag);
             $em->flush();
         }
-        return $this->redirectToRoute('blog_admin_author_index');
+        return $this->redirectToRoute('blog_admin_tag_index');
     }
     /**
-     * Creates a form to delete a Author entity.
+     * Creates a form to delete a Tag entity.
      *
-     * @param Author $author The Author entity
+     * @param Tag $tag The Tag entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Author $author)
+    private function createDeleteForm(Tag $tag)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('blog_admin_author_delete', array('id' => $author->getId())))
+            ->setAction($this->generateUrl('blog_admin_tag_delete', array('id' => $tag->getId())))
             ->setMethod('DELETE')
             ->getForm();
     }
