@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class TagController
+ *
+ * @Route("/{_locale}", requirements={"_locale"="en|hu"}, defaults={"_locale"="en"})
  */
 class TagController extends Controller
 {

@@ -21,7 +21,7 @@ class TagControllerTest extends WebTestCase
         $tag = $client->getContainer()->get('doctrine')->getManager()->getRepository('ModelBundle:Tag')->findFirst();
         $tagPostsCount = $tag->getPosts()->count();
 
-        $crawler = $client->request('GET', '/tag/'.$tag->getSlug());
+        $crawler = $client->request('GET', '/en/tag/'.$tag->getSlug());
 
         $this->assertTrue($client->getResponse()->isSuccessful(), 'The response was not successful.');
 
