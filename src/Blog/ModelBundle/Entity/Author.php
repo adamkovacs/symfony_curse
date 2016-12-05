@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Author
@@ -13,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="Blog\ModelBundle\Repository\AuthorRepository")
  */
-class Author extends Timestampable
+class Author extends Timestampable implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -31,6 +32,22 @@ class Author extends Timestampable
      * @Assert\NotBlank
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=20)
+     * @Assert\NotBlank
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="roles", type="string", length=20)
+     * @Assert\NotBlank
+     */
+    private $roles;
 
     /**
      * @var string
@@ -153,5 +170,105 @@ class Author extends Timestampable
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Author
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     *
+     * @return Author
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return string
+     */
+    public function getRoles()
+    {
+        return array($this->roles);
+    }
+
+    /**
+     * Get Username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Get Salt
+     *
+     * @return null
+     */
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+
+    public function eraseCredentials()
+    {
+        $this->password = '';
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->name,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
     }
 }

@@ -28,7 +28,11 @@ class PostController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $posts = $em->getRepository('ModelBundle:Post')->findAll();
+        $posts = $em->getRepository('ModelBundle:Post')->findBy(
+            array(
+                'author' => $this->getUser()
+            )
+        );
         return array(
             'posts' => $posts,
         );

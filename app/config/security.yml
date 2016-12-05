@@ -4,6 +4,7 @@ security:
 
     encoders:
             Symfony\Component\Security\Core\User\User: plaintext
+            Blog\ModelBundle\Entity\Author: plaintext
 
     role_hierarchy:
         ROLE_ADMIN:             ROLE_USER
@@ -14,9 +15,13 @@ security:
             memory:
               users:
                 admin: { password: admin, roles: [ 'ROLE_SUPER_ADMIN' ] }
-                David: { password: admin, roles: [ 'ROLE_ADMIN' ] }
-                Eddie: { password: admin, roles: [ 'ROLE_ADMIN' ] }
-                Elasa: { password: admin, roles: [ 'ROLE_ADMIN' ] }
+        author:
+            entity:
+              class: ModelBundle:Author
+              property: name
+        admin:
+            chain:
+              providers: [in_memory, author]
 
     firewalls:
 
@@ -27,10 +32,12 @@ security:
         admin_area:
           pattern: ^/admin/
           anonymous: ~
+          provider: admin
           http_basic:
           form_login:
             login_path: blog_admin_security_login
             check_path: blog_admin_security_logincheck
+            default_target_path: /admin/post
           logout:
             path: blog_admin_security_logout
             target: /admin/post
