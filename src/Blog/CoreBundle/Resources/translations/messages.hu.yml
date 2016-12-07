@@ -6,6 +6,8 @@ read.more: Tovább
 name: Név
 send: Küldés
 tags: Cimkék
+register: Regisztráció
+login: Belépés
 
 post:
   plural: Postok

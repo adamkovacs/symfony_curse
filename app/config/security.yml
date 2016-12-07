@@ -5,12 +5,18 @@ security:
     encoders:
             Symfony\Component\Security\Core\User\User: plaintext
             Blog\ModelBundle\Entity\Author: plaintext
+            Blog\ModelBundle\Entity\User: plaintext
 
     role_hierarchy:
+        ROLE_USER:              ROLE_USER
         ROLE_ADMIN:             ROLE_USER
         ROLE_SUPER_ADMIN:       [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        user:
+            entity:
+              class: ModelBundle:User
+              property: name
         in_memory:
             memory:
               users:
@@ -44,7 +50,17 @@ security:
           access_denied_url: access_denied
 
         main:
+          pattern: ^/
           anonymous: ~
+          provider: user
+          http_basic:
+          form_login:
+              login_path: blog_core_security_login
+              check_path: blog_core_security_logincheck
+              default_target_path: blog_core_post_index
+          logout:
+              path: blog_core_security_logout
+              target: blog_core_post_index
 
     access_control:
       - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -6,6 +6,8 @@ read.more: Read more
 name: Name
 send: Send
 tags: Tags
+register: Register
+login: Login
 
 post:
   plural: Posts
