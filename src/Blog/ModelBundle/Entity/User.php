@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * User
  *
  * @ORM\Table(name="user")
+ * @ORM\Entity()
  */
 class User implements UserInterface, \Serializable
 {
@@ -178,7 +179,7 @@ class User implements UserInterface, \Serializable
      */
     public function getUsername()
     {
-        return $this->getName();
+        return $this->getEmail();
     }
 
     /**
@@ -204,7 +205,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->name,
+            $this->email,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -216,7 +217,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->name,
+            $this->email,
             $this->password,
             // see section on salt below
             // $this->salt

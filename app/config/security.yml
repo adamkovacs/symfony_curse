@@ -16,7 +16,7 @@ security:
         user:
             entity:
               class: ModelBundle:User
-              property: name
+              property: email
         in_memory:
             memory:
               users:

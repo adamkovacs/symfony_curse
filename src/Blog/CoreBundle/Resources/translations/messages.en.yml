@@ -8,6 +8,7 @@ send: Send
 tags: Tags
 register: Register
 login: Login
+logout: Logout
 
 post:
   plural: Posts

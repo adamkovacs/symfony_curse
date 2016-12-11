@@ -30,7 +30,7 @@ class SecurityController extends Controller
         //get the login error if is one
         if($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } else {var_dump($request->attributes->get(SecurityContext::AUTHENTICATION_ERROR));
+        } else {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
@@ -39,7 +39,7 @@ class SecurityController extends Controller
             'CoreBundle:Security:login.html.twig',
             array(
                 // last username entered by the user
-                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+                'last_email' => $session->get(SecurityContext::LAST_USERNAME),
                 'error' => $error
             )
         );
