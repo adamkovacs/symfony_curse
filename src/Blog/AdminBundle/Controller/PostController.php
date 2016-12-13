@@ -68,6 +68,9 @@ class PostController extends Controller
                     $post->addTag($tag);
                 }
             }
+            if ($this->getUser()->getUsername() != 'admin') {
+                $post->setAuthor($this->getUser());
+            }
             $em->persist($post);
             $em->flush();
             return $this->redirectToRoute('blog_admin_post_show', array('id' => $post->getId()));

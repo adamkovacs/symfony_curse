@@ -1,0 +1,18 @@
+{% extends '@Admin/layout.html.twig' %}
+
+{% block title %}{{ 'settings'|trans }}{% endblock %}
+
+{% block section %}
+    <h1>{{ 'settings'|trans }}</h1>
+
+    <form action="{{ path('blog_admin_setting_edit') }}" method="post">
+        <label for="anonymous_comment">{{ 'anonymous_comment'|trans }}</label>
+        <select required="required" id="anonymous_comment" name="settings[anonymous_comment]">
+            <option value="1" {{ anonymous_comment == 1 ? 'selected="selected"' : '' }}>{{ 'yes'|trans }}</option>
+            <option value="0" {{ anonymous_comment == 0 ? 'selected="selected"' : '' }}>{{ 'no'|trans }}</option>
+        </select>
+        <br>
+        <button type="submit">{{ 'send'|trans }}</button>
+    </form>
+
+{% endblock %}

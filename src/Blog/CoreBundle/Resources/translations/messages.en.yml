@@ -9,6 +9,7 @@ tags: Tags
 register: Register
 login: Login
 logout: Logout
+settings: Settings
 
 post:
   plural: Posts

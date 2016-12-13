@@ -51,10 +51,26 @@ class PostController extends Controller
     public function showAction($slug)
     {
         $post = $this->getPostManager()->findBySlug($slug);
+
+        $em = $this->getDoctrine()->getManager();
+        $setting = $em->getRepository('ModelBundle:Setting')->findBy(
+            array(
+                'key' => 'anonymous_comment'
+            )
+        );
+
+        if($setting[0]->getValue() == 0 && $this->getUser() == null) {
+            return array(
+                'anonymous_comment' => false,
+                'post' => $post
+            );
+        }
+
         $form = $this->createForm(new CommentType());
 
         return array(
             'post' => $post,
+            'anonymous_comment' => true,
             'form' => $form->createView()
         );
     }

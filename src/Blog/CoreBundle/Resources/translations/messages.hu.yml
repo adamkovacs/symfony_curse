@@ -9,6 +9,7 @@ tags: Cimkék
 register: Regisztráció
 login: Belépés
 logout: Kilépés
+settings: Beállítások
 
 post:
   plural: Postok
